@@ -2,7 +2,7 @@
 import { ReactNode, useEffect } from "react";
 import { useAuthStore } from "../_store/useAuthStore";
 import { fetchToApi } from "@/lib/fetchToApis/fetchToApi";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 
 export default function AuthClientProvider({
   children,
@@ -15,6 +15,7 @@ export default function AuthClientProvider({
   const router = useRouter();
   const isLoading = useAuthStore((state) => state.isLoading);
   const setIsLoading = useAuthStore((state) => state.setIsLoading);
+  const pathname = usePathname();
 
   useEffect(() => {
     const checkAuth = async () => {
@@ -32,11 +33,17 @@ export default function AuthClientProvider({
   }, []);
 
   useEffect(() => {
+    if (
+      pathname === "/" ||
+      pathname === "/auth/register" ||
+      pathname === "/auth/login"
+    )
+      return;
     if (!isAuth && !isLoading) {
       router.replace("/auth/login");
       return;
     }
-  }, [isAuth, isLoading]);
+  }, [isAuth, isLoading, pathname]);
 
   return !isLoading ? children : null;
 }
