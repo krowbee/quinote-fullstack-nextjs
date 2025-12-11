@@ -34,7 +34,7 @@ export default function RegisterForm() {
       setError("root", { message: json.message });
       return;
     }
-    login();
+    login(json.user);
     redirect("/");
   };
 
