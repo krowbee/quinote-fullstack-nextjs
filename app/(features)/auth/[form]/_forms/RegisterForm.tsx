@@ -4,7 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import {
   RegisterFormInputs,
   RegisterSchema,
-} from "../../../../shared/schemas/RegisterSchema";
+} from "@/shared/schemas/RegisterSchema";
 import { redirect } from "next/navigation";
 import { useAuthStore } from "@/app/_store/useAuthStore";
 

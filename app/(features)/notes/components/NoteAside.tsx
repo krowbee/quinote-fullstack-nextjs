@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo } from "react";
 import AsideDisplayNotes from "./AsideDisplayNotes";
 import { fetchToApi } from "@/lib/api/http-client";
 import NewNote from "./NewNote";
@@ -31,7 +31,7 @@ export default function NoteAside({
       return;
     }
     setNotes(initialNoteList);
-  }, [initialNoteList, updateNotes]);
+  }, [initialNoteList, updateNotes, setNotes]);
 
   const { pinnedNotes, regularNotes } = useMemo(() => {
     const pinned: PublicNote[] = [];

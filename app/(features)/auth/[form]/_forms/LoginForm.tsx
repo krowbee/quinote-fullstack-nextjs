@@ -1,9 +1,6 @@
 "use client";
 import { useForm } from "react-hook-form";
-import {
-  LoginFormInputs,
-  LoginSchema,
-} from "../../../../shared/schemas/LoginSchema";
+import { LoginFormInputs, LoginSchema } from "@/shared/schemas/LoginSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { redirect } from "next/navigation";
 import { useAuthStore } from "@/app/_store/useAuthStore";
