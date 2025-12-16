@@ -1,12 +1,12 @@
 import { HttpException } from "@/lib/exceptions/HttpException";
 import { UnauthorizedException } from "@/lib/exceptions/httpExceptions/httpExceptions";
-import { authService } from "@/lib/services/auth.service";
+import { authService } from "@/domains/auth/services/auth.service";
 import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
 import {
   accessCookieOptions,
   refreshCookieOptions,
-} from "../_authConsts/cookiesOptions";
+} from "../_constants/cookiesOptions";
 
 export async function POST() {
   try {

@@ -1,7 +1,7 @@
 import { HttpException } from "@/lib/exceptions/HttpException";
-import { noteService } from "@/lib/services/note.service";
+import { noteService } from "@/domains/notes/services/note.service";
 import { NextRequest, NextResponse } from "next/server";
-import { getUser } from "./_utillities/getUser";
+import { getUser } from "../_helpers/getUser";
 import { CreateNoteSchema } from "./schemas/CreateNoteSchema";
 import { BadRequestException } from "@/lib/exceptions/httpExceptions/httpExceptions";
 

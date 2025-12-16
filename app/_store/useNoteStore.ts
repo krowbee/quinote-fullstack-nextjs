@@ -2,7 +2,7 @@
 
 import { create } from "zustand";
 
-import { PublicNote } from "@/lib/types/note.type";
+import { PublicNote } from "@/domains/notes/types/note.types";
 
 interface NoteStore {
   notes: PublicNote[];

@@ -1,23 +1,30 @@
-import HeaderWrapper from "./_components/HeaderWrapper";
+import HeaderWrapper from "./components/HeaderWrapper";
 import "./globals.css";
-import AuthServerProvider from "./_providers/AuthServerProvider";
-import { Inter } from "next/font/google";
-const inter = Inter({
-  subsets: ["latin", "cyrillic"],
+import AuthClientProvider from "./_providers/AuthClientProvider";
+import { Inter, Space_Grotesk } from "next/font/google";
+
+export const inter = Inter({
+  subsets: ["latin"],
   variable: "--font-inter",
 });
+
+export const spaceGrotesk = Space_Grotesk({
+  subsets: ["latin"],
+  variable: "--font-space",
+});
+
 export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" data-theme="light" className={inter.variable}>
-      <body className="relative">
-        <AuthServerProvider>
+    <html lang="en" data-theme="light">
+      <body className={`${inter.variable} ${spaceGrotesk.variable} relative`}>
+        <AuthClientProvider>
           <HeaderWrapper />
           {children}
-        </AuthServerProvider>
+        </AuthClientProvider>
       </body>
     </html>
   );

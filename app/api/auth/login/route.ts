@@ -1,12 +1,12 @@
 import { HttpException } from "@/lib/exceptions/HttpException";
-import { LoginSchema } from "@/lib/schemas/LoginSchema";
-import { authService } from "@/lib/services/auth.service";
+import { LoginSchema } from "@/shared/schemas/LoginSchema";
+import { authService } from "@/domains/auth/services/auth.service";
 import { cookies } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
 import {
   accessCookieOptions,
   refreshCookieOptions,
-} from "../_authConsts/cookiesOptions";
+} from "../_constants/cookiesOptions";
 import { BadRequestException } from "@/lib/exceptions/httpExceptions/httpExceptions";
 
 export async function POST(req: NextRequest) {

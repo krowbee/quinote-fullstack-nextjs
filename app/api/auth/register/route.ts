@@ -1,13 +1,13 @@
 import { HttpException } from "@/lib/exceptions/HttpException";
 import { BadRequestException } from "@/lib/exceptions/httpExceptions/httpExceptions";
-import { RegisterSchema } from "@/lib/schemas/RegisterSchema";
-import { authService } from "@/lib/services/auth.service";
+import { RegisterSchema } from "@/shared/schemas/RegisterSchema";
+import { authService } from "@/domains/auth/services/auth.service";
 import { cookies } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
 import {
   accessCookieOptions,
   refreshCookieOptions,
-} from "../_authConsts/cookiesOptions";
+} from "../_constants/cookiesOptions";
 
 export async function POST(req: NextRequest) {
   try {

@@ -1,7 +1,7 @@
 "use client";
 import { ReactNode, useEffect } from "react";
 import { useAuthStore } from "../_store/useAuthStore";
-import { fetchToApi } from "@/lib/fetchToApis/fetchToApi";
+import { fetchToApi } from "@/lib/api/http-client";
 import { usePathname, useRouter } from "next/navigation";
 
 export default function AuthClientProvider({

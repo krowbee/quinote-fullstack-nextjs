@@ -1,4 +1,4 @@
-import { getUser } from "../../notes/_utillities/getUser";
+import { getUser } from "../../_helpers/getUser";
 import { NextResponse } from "next/server";
 import { HttpException } from "@/lib/exceptions/HttpException";
 
