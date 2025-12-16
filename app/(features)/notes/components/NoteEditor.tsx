@@ -2,9 +2,10 @@
 
 import { useDebounce } from "../hooks/useDebounce";
 import { useNoteStore } from "@/app/_store/useNoteStore";
-import { fetchToApi } from "@/lib/api/http-client";
 import { PublicNote } from "@/domains/notes/types/note.types";
 import { useEffect, useRef, useState } from "react";
+import { updateNote } from "../services/note.client.service";
+import { UpdateNoteDto } from "../dto/notes.dto";
 
 export default function NoteEditor({ note }: { note: PublicNote }) {
   const [title, setTitle] = useState(note.name);
@@ -13,7 +14,7 @@ export default function NoteEditor({ note }: { note: PublicNote }) {
   const debouncedTitle = useDebounce(title, 1000);
   const debouncedText = useDebounce(text, 1000);
 
-  const updateNote = useNoteStore((state) => state.updateNote);
+  const updateLocalNote = useNoteStore((state) => state.updateLocalNote);
 
   const lastSaved = useRef({
     title: note.name,
@@ -27,19 +28,16 @@ export default function NoteEditor({ note }: { note: PublicNote }) {
     if (!titleChanged && !textChanged) return;
 
     const save = async () => {
-      const payload: Partial<PublicNote> = {};
+      const payload: UpdateNoteDto = {};
 
       if (titleChanged) payload.name = debouncedTitle;
       if (textChanged) payload.text = debouncedText;
 
-      const res = await fetchToApi(`/api/notes/${note.id}`, {
-        method: "PATCH",
-        body: JSON.stringify(payload),
-      });
+      const result = await updateNote(note.id, payload);
 
-      if (!res.ok) return;
+      if (!result) return;
 
-      updateNote(note.id, payload);
+      updateLocalNote(note.id, payload);
 
       lastSaved.current = {
         title: debouncedTitle,
@@ -48,7 +46,7 @@ export default function NoteEditor({ note }: { note: PublicNote }) {
     };
 
     save();
-  }, [debouncedTitle, debouncedText, note.id, updateNote]);
+  }, [debouncedTitle, debouncedText, note.id, updateLocalNote]);
 
   return (
     <div className="flex flex-col w-full h-full  p-4">

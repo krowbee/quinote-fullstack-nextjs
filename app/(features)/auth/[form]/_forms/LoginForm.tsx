@@ -2,8 +2,9 @@
 import { useForm } from "react-hook-form";
 import { LoginFormInputs, LoginSchema } from "@/shared/schemas/LoginSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { redirect } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { useAuthStore } from "@/app/_store/useAuthStore";
+import { loginUser } from "../../services/auth.client.service";
 
 export default function LoginForm() {
   const {
@@ -13,26 +14,21 @@ export default function LoginForm() {
     setError,
   } = useForm<LoginFormInputs>({
     resolver: zodResolver(LoginSchema),
-    defaultValues: { email: "", password: "" },
+    shouldFocusError: true,
   });
-
+  const router = useRouter();
   const login = useAuthStore((state) => state.login);
 
   const handleForm = async (data: LoginFormInputs) => {
-    const response = await fetch("/api/auth/login", {
-      method: "POST",
-      body: JSON.stringify({ email: data.email, password: data.password }),
-      headers: { "Content-type": "application/json" },
-    });
+    const result = await loginUser(data);
 
-    const json = await response.json();
-
-    if (!response.ok) {
-      setError("root", { message: json.message });
+    if (!result.success) {
+      setError("root", { message: result.message });
       return;
     }
-    login(json.user);
-    return redirect("/");
+
+    login(result.user);
+    router.replace("/");
   };
 
   return (

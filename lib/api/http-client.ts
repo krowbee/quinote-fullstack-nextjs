@@ -46,3 +46,17 @@ export async function fetchToApi(url: string, options: RequestInit = {}) {
 
   return res;
 }
+
+export async function fetchWithoutRefresh(
+  url: string,
+  options: RequestInit = {}
+) {
+  const opts: RequestInit = {
+    ...options,
+    headers: {
+      ...(options.body && { "Content-Type": "application/json" }),
+      ...(options.headers ?? {}),
+    },
+  };
+  return fetch(url, opts);
+}

@@ -9,7 +9,7 @@ interface NoteStore {
   setNotes: (notes: PublicNote[]) => void;
   choosedNote: PublicNote | null;
   setChoosedNote: (note: PublicNote | null) => void;
-  updateNote: (id: number, data: Partial<PublicNote>) => void;
+  updateLocalNote: (id: number, data: Partial<PublicNote>) => void;
 }
 
 export const useNoteStore = create<NoteStore>((set) => ({
@@ -17,7 +17,7 @@ export const useNoteStore = create<NoteStore>((set) => ({
   choosedNote: null,
   setChoosedNote: (note) => set({ choosedNote: note }),
   setNotes: (notes) => set({ notes }),
-  updateNote: (id, data) =>
+  updateLocalNote: (id, data) =>
     set((state) => ({
       notes: state.notes.map((note) =>
         note.id === id ? { ...note, ...data } : note

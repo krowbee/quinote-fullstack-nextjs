@@ -5,8 +5,9 @@ import {
   RegisterFormInputs,
   RegisterSchema,
 } from "@/shared/schemas/RegisterSchema";
-import { redirect } from "next/navigation";
 import { useAuthStore } from "@/app/_store/useAuthStore";
+import { useRouter } from "next/navigation";
+import { registerUser } from "../../services/auth.client.service";
 
 export default function RegisterForm() {
   const {
@@ -16,26 +17,20 @@ export default function RegisterForm() {
     setError,
   } = useForm<RegisterFormInputs>({
     resolver: zodResolver(RegisterSchema),
-    defaultValues: { email: "", password: "" },
+    shouldFocusError: true,
   });
-
+  const router = useRouter();
   const login = useAuthStore((state) => state.login);
 
   const handleForm = async (data: RegisterFormInputs) => {
-    const response = await fetch("/api/auth/register", {
-      body: JSON.stringify({ email: data.email, password: data.password }),
-      headers: { "Content-Type": "application/json" },
-      method: "POST",
-    });
+    const result = await registerUser(data);
 
-    const json = await response.json();
-
-    if (!response.ok) {
-      setError("root", { message: json.message });
+    if (!result.success) {
+      setError("root", { message: result.message });
       return;
     }
-    login(json.user);
-    redirect("/");
+    login(result.user);
+    router.replace("/");
   };
 
   return (

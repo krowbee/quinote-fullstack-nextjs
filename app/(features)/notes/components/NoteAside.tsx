@@ -1,12 +1,11 @@
 "use client";
-
 import { useCallback, useEffect, useMemo } from "react";
 import AsideDisplayNotes from "./AsideDisplayNotes";
-import { fetchToApi } from "@/lib/api/http-client";
 import NewNote from "./NewNote";
 import { PublicNote } from "@/domains/notes/types/note.types";
 import { useNoteStore } from "@/app/_store/useNoteStore";
 import { useAuthStore } from "@/app/_store/useAuthStore";
+import { fetchNotes } from "../services/note.client.service";
 
 export default function NoteAside({
   initialNoteList,
@@ -17,21 +16,18 @@ export default function NoteAside({
   const notes = useNoteStore((state) => state.notes);
   const setNotes = useNoteStore((state) => state.setNotes);
 
-  const updateNotes = useCallback(async () => {
-    const res = await fetchToApi("/api/notes", { method: "GET" });
-    if (!res.ok) return;
-    const json = await res.json();
-    setNotes(json.notes);
+  const refreshNotes = useCallback(async () => {
+    const notes = await fetchNotes();
+    setNotes(notes);
   }, [setNotes]);
 
   useEffect(() => {
     if (initialNoteList === null) {
-      const load = async () => await updateNotes();
-      load();
+      refreshNotes();
       return;
     }
     setNotes(initialNoteList);
-  }, [initialNoteList, updateNotes, setNotes]);
+  }, [initialNoteList, refreshNotes, setNotes]);
 
   const { pinnedNotes, regularNotes } = useMemo(() => {
     const pinned: PublicNote[] = [];
@@ -58,17 +54,17 @@ export default function NoteAside({
         <h2 className="text-md">You working as:</h2>
         <p className="text-md font-medium text-primary">{user?.email}</p>
       </div>
-      <NewNote updateNotes={updateNotes} />
+      <NewNote refreshNotes={refreshNotes} />
       <div className="w-full flex flex-col gap-4 items-center">
         <>
           <AsideDisplayNotes
             title="Pinned"
-            updateNotes={updateNotes}
+            refreshNotes={refreshNotes}
             notes={pinnedNotes}
           />
           <AsideDisplayNotes
             title="Notes"
-            updateNotes={updateNotes}
+            refreshNotes={refreshNotes}
             notes={regularNotes}
           />
         </>

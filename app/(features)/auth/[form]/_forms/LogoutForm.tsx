@@ -1,21 +1,22 @@
 "use client";
 import { useAuthStore } from "@/app/_store/useAuthStore";
-import { fetchToApi } from "@/lib/api/http-client";
-import { redirect } from "next/navigation";
 import { useForm } from "react-hook-form";
+import { logoutUser } from "../../services/auth.client.service";
+import { useRouter } from "next/navigation";
 
 export default function LogoutForm() {
   const logout = useAuthStore((state) => state.logout);
+  const router = useRouter();
+
   const handleForm = async () => {
-    const res = await fetchToApi("/api/auth/logout", { method: "POST" });
-    const json = await res.json();
-    if (!res.ok) {
-      setError("root", { message: json.message });
+    const result = await logoutUser();
+    if (!result.success) {
+      setError("root", { message: result.message });
       return;
     }
-    logout();
 
-    redirect("/");
+    logout();
+    router.replace("/");
   };
 
   const {

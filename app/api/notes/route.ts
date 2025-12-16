@@ -2,8 +2,6 @@ import { HttpException } from "@/lib/exceptions/HttpException";
 import { noteService } from "@/domains/notes/services/note.service";
 import { NextRequest, NextResponse } from "next/server";
 import { getUser } from "../_helpers/getUser";
-import { CreateNoteSchema } from "./schemas/CreateNoteSchema";
-import { BadRequestException } from "@/lib/exceptions/httpExceptions/httpExceptions";
 
 export async function GET() {
   try {

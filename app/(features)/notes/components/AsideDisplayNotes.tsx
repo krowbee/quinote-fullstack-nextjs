@@ -1,38 +1,35 @@
 "use client";
 import { useNoteStore } from "@/app/_store/useNoteStore";
-import { fetchToApi } from "@/lib/api/http-client";
 import { PublicNote } from "@/domains/notes/types/note.types";
+import { deleteNote, updateNote } from "../services/note.client.service";
 
 export default function AsideDisplayNotes({
   title,
   notes,
-  updateNotes,
+  refreshNotes,
 }: {
   title: string;
   notes: PublicNote[];
-  updateNotes: () => void;
+  refreshNotes: () => void;
 }) {
   const setChoosedNote = useNoteStore((state) => state.setChoosedNote);
   const choosedNote = useNoteStore((state) => state.choosedNote);
 
   const handleDeleteNote = async (noteId: number) => {
-    const res = await fetchToApi(`/api/notes/${noteId}`, { method: "DELETE" });
-    if (!res.ok) return;
+    const result = await deleteNote(noteId);
+    if (!result) return;
+
     if (choosedNote?.id === noteId) {
       setChoosedNote(null);
     }
-    await updateNotes();
+
+    refreshNotes();
   };
 
   const handlePinNote = async (noteId: number, pinStatus: boolean) => {
-    const res = await fetchToApi(`/api/notes/${noteId}`, {
-      method: "PATCH",
-      body: JSON.stringify({
-        pinned: pinStatus,
-      }),
-    });
-    if (!res.ok) return;
-    await updateNotes();
+    const result = await updateNote(noteId, { pinned: pinStatus });
+    if (!result) return;
+    refreshNotes();
   };
 
   return (
