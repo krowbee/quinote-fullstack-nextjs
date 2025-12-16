@@ -1,5 +1,5 @@
 "use client";
-import { useIsMobile } from "../_hooks/useIsMobile";
+import { useIsMobile } from "../hooks/useIsMobile";
 import DesktopHeader from "./DesktopHeader";
 import MobileHeader from "./MobileHeader";
 
