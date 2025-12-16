@@ -2,7 +2,7 @@
 
 import { useAuthStore } from "@/app/_store/useAuthStore";
 import { useEffect } from "react";
-import { getMe } from "../services/auth.client.service";
+import { getMe } from "../api/auth.client.api";
 
 export function useAuthInit() {
   const login = useAuthStore((state) => state.login);

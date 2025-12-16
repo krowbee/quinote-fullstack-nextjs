@@ -4,7 +4,7 @@ import { useDebounce } from "../hooks/useDebounce";
 import { useNoteStore } from "@/app/_store/useNoteStore";
 import { PublicNote } from "@/domains/notes/types/note.types";
 import { useEffect, useRef, useState } from "react";
-import { updateNote } from "../services/note.client.service";
+import { updateNote } from "../api/note.client.api";
 import { UpdateNoteDto } from "../dto/notes.dto";
 
 export default function NoteEditor({ note }: { note: PublicNote }) {

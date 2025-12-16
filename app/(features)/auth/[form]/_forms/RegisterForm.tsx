@@ -7,7 +7,7 @@ import {
 } from "@/shared/schemas/RegisterSchema";
 import { useAuthStore } from "@/app/_store/useAuthStore";
 import { useRouter } from "next/navigation";
-import { registerUser } from "../../services/auth.client.service";
+import { registerUser } from "../../api/auth.client.api";
 
 export default function RegisterForm() {
   const {

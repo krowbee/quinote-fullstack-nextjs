@@ -4,7 +4,7 @@ import { LoginFormInputs, LoginSchema } from "@/shared/schemas/LoginSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
 import { useAuthStore } from "@/app/_store/useAuthStore";
-import { loginUser } from "../../services/auth.client.service";
+import { loginUser } from "../../api/auth.client.api";
 
 export default function LoginForm() {
   const {

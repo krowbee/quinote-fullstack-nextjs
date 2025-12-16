@@ -1,7 +1,7 @@
 "use client";
 import { useAuthStore } from "@/app/_store/useAuthStore";
 import { useForm } from "react-hook-form";
-import { logoutUser } from "../../services/auth.client.service";
+import { logoutUser } from "../../api/auth.client.api";
 import { useRouter } from "next/navigation";
 
 export default function LogoutForm() {

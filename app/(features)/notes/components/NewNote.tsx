@@ -1,5 +1,5 @@
 import { useNoteStore } from "@/app/_store/useNoteStore";
-import { createNote } from "../services/note.client.service";
+import { createNote } from "../api/note.client.api";
 
 export default function NewNote({
   refreshNotes,

@@ -1,7 +1,7 @@
 "use client";
 import { useNoteStore } from "@/app/_store/useNoteStore";
 import { PublicNote } from "@/domains/notes/types/note.types";
-import { deleteNote, updateNote } from "../services/note.client.service";
+import { deleteNote, updateNote } from "../api/note.client.api";
 
 export default function AsideDisplayNotes({
   title,

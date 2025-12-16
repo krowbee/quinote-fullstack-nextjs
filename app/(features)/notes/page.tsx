@@ -1,7 +1,7 @@
 import NoteAside from "./components/NoteAside";
 import NoteBlock from "./components/NoteBlock";
 import { PublicNote } from "@/domains/notes/types/note.types";
-import { getInitialNotes } from "./services/note.server.service";
+import { getInitialNotes } from "./api/note.server.service";
 
 export default async function NotesPage() {
   const initialNoteList: PublicNote[] = (await getInitialNotes()) || null;

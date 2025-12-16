@@ -5,7 +5,7 @@ import NewNote from "./NewNote";
 import { PublicNote } from "@/domains/notes/types/note.types";
 import { useNoteStore } from "@/app/_store/useNoteStore";
 import { useAuthStore } from "@/app/_store/useAuthStore";
-import { fetchNotes } from "../services/note.client.service";
+import { fetchNotes } from "../api/note.client.api";
 
 export default function NoteAside({
   initialNoteList,
