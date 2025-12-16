@@ -48,7 +48,7 @@ export default function NoteEditor({ note }: { note: PublicNote }) {
     };
 
     save();
-  }, [debouncedTitle, debouncedText, note.id]);
+  }, [debouncedTitle, debouncedText, note.id, updateNote]);
 
   return (
     <div className="flex flex-col w-full h-full  p-4">

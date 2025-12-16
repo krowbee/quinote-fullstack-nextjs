@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/set-state-in-effect */
 "use client";
-import { ReactNode, useEffect, useState } from "react";
-import { useAuthStore } from "../_store/useAuthStore";
+import { ReactNode, useEffect } from "react";
+import { useAuthStore } from "@/app/_store/useAuthStore";
 import { usePathname } from "next/navigation";
 import { useRouter } from "next/navigation";
 export default function NonAuthLayout({ children }: { children: ReactNode }) {
