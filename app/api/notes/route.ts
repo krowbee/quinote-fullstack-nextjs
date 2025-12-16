@@ -1,6 +1,6 @@
 import { HttpException } from "@/lib/exceptions/HttpException";
 import { noteService } from "@/domains/notes/services/note.service";
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 import { getUser } from "../_helpers/getUser";
 
 export async function GET() {
@@ -22,7 +22,7 @@ export async function GET() {
   }
 }
 
-export async function POST(req: NextRequest) {
+export async function POST() {
   try {
     const user = await getUser();
 
