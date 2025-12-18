@@ -1,18 +1,16 @@
 import { Note } from "@prisma/client";
-import {
-  BadRequestException,
-  NotFoundException,
-  UnauthorizedException,
-} from "../../../lib/exceptions/httpExceptions/httpExceptions";
 import { prisma } from "../../../lib/prisma/prisma";
 import { PublicNote } from "../types/note.types";
+import {
+  HaveNotAccessError,
+  InvalidRequestDataError,
+} from "../errors/notes.errors";
 
 class NoteService {
   async getNoteById(userId: number, noteId: number): Promise<PublicNote> {
     const note = await prisma.note.findUnique({ where: { id: noteId } });
-    if (!note) throw new BadRequestException("Incorrect note id");
-    if (note.ownerId !== userId)
-      throw new UnauthorizedException("You haven't access to this resource");
+    if (!note) throw new InvalidRequestDataError();
+    if (note.ownerId !== userId) throw new HaveNotAccessError();
     return {
       id: note.id,
       name: note.name,
@@ -24,7 +22,7 @@ class NoteService {
   }
 
   async getUserNotes(userId: number): Promise<PublicNote[]> {
-    if (!userId) throw new BadRequestException("Invalid user id");
+    if (!userId) throw new InvalidRequestDataError();
     return prisma.note.findMany({
       where: { ownerId: userId },
       orderBy: { updatedAt: "desc" },
@@ -40,7 +38,7 @@ class NoteService {
   }
 
   async createUserNote(userId: number): Promise<PublicNote> {
-    if (!userId) throw new BadRequestException("Invalid request data");
+    if (!userId) throw new InvalidRequestDataError();
 
     return prisma.note.create({
       data: {
@@ -65,7 +63,7 @@ class NoteService {
     const haveAccess = await prisma.note.findFirst({
       where: { id: noteId, ownerId: userId },
     });
-    if (!haveAccess) throw new NotFoundException("Resource not found");
+    if (!haveAccess) throw new HaveNotAccessError();
 
     return prisma.note.update({
       where: { id: noteId },
@@ -89,7 +87,7 @@ class NoteService {
     const haveAccess = await prisma.note.findFirst({
       where: { id: noteId, ownerId: userId },
     });
-    if (!haveAccess) throw new NotFoundException("Resource not found");
+    if (!haveAccess) throw new HaveNotAccessError();
     return prisma.note.delete({ where: { id: noteId } });
   }
 }

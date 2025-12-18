@@ -1,5 +1,3 @@
-import { HttpException } from "@/lib/exceptions/HttpException";
-import { UnauthorizedException } from "@/lib/exceptions/httpExceptions/httpExceptions";
 import { authService } from "@/domains/auth/services/auth.service";
 import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
@@ -7,13 +5,14 @@ import {
   accessCookieOptions,
   refreshCookieOptions,
 } from "../_constants/cookiesOptions";
+import { mapErrorToResponse } from "@/lib/http/errorMapper";
+import { HaveNotRefreshTokenError } from "@/lib/http/errors/http.errors";
 
 export async function POST() {
   try {
     const cookie = await cookies();
     const reqRefreshToken = cookie.get("refreshToken")?.value;
-    if (!reqRefreshToken)
-      throw new UnauthorizedException("Invalid refresh token");
+    if (!reqRefreshToken) throw new HaveNotRefreshTokenError();
 
     const { accessToken, refreshToken } = await authService.refresh(
       reqRefreshToken
@@ -27,14 +26,6 @@ export async function POST() {
       { status: 200 }
     );
   } catch (err) {
-    if (err instanceof HttpException)
-      return NextResponse.json(
-        { message: err.message },
-        { status: err.status }
-      );
+    return mapErrorToResponse(err);
   }
-  return NextResponse.json(
-    { message: "Internal server error" },
-    { status: 500 }
-  );
 }

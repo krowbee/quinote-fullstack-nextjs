@@ -1,4 +1,3 @@
-import { HttpException } from "@/lib/exceptions/HttpException";
 import { LoginSchema } from "@/shared/schemas/LoginSchema";
 import { authService } from "@/domains/auth/services/auth.service";
 import { cookies } from "next/headers";
@@ -7,13 +6,14 @@ import {
   accessCookieOptions,
   refreshCookieOptions,
 } from "../_constants/cookiesOptions";
-import { BadRequestException } from "@/lib/exceptions/httpExceptions/httpExceptions";
+import { InvalidBodyDataError } from "@/lib/http/errors/http.errors";
+import { mapErrorToResponse } from "@/lib/http/errorMapper";
 
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
     const dataInvalidCheck = LoginSchema.safeParse(body);
-    if (!dataInvalidCheck.success) throw new BadRequestException();
+    if (!dataInvalidCheck.success) throw new InvalidBodyDataError();
 
     const validData = LoginSchema.parse(body);
 
@@ -31,14 +31,6 @@ export async function POST(req: NextRequest) {
       { status: 200 }
     );
   } catch (err) {
-    if (err instanceof HttpException)
-      return NextResponse.json(
-        { message: err.message },
-        { status: err.status }
-      );
+    return mapErrorToResponse(err);
   }
-  return NextResponse.json(
-    { message: "Internal server error" },
-    { status: 500 }
-  );
 }

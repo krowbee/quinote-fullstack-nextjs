@@ -1,9 +1,9 @@
-import { HttpException } from "@/lib/exceptions/HttpException";
 import { NextRequest, NextResponse } from "next/server";
 import { getUser } from "../../_helpers/getUser";
 import { noteService } from "@/domains/notes/services/note.service";
-import { BadRequestException } from "@/lib/exceptions/httpExceptions/httpExceptions";
 import { UpdateNoteSchema } from "../schemas/UpdateNoteSchema";
+import { mapErrorToResponse } from "@/lib/http/errorMapper";
+import { InvalidBodyDataError } from "../../../../lib/http/errors/http.errors";
 
 export async function GET(
   req: NextRequest,
@@ -16,16 +16,7 @@ export async function GET(
     const note = await noteService.getNoteById(user.id, noteId);
     return NextResponse.json({ note }, { status: 200 });
   } catch (err) {
-    if (err instanceof HttpException) {
-      return NextResponse.json(
-        { message: err.message },
-        { status: err.status }
-      );
-    }
-    return NextResponse.json(
-      { message: "Internal server error" },
-      { status: 500 }
-    );
+    return mapErrorToResponse(err);
   }
 }
 
@@ -42,7 +33,7 @@ export async function PATCH(
     const data = await req.json();
     const isValid = UpdateNoteSchema.safeParse(data);
 
-    if (!isValid.success) throw new BadRequestException();
+    if (!isValid.success) throw new InvalidBodyDataError();
     const validData = UpdateNoteSchema.parse(data);
     const updatedNote = await noteService.updateUserNote(
       user.id,
@@ -54,16 +45,7 @@ export async function PATCH(
       { status: 200 }
     );
   } catch (err) {
-    if (err instanceof HttpException) {
-      return NextResponse.json(
-        { message: err.message },
-        { status: err.status }
-      );
-    }
-    return NextResponse.json(
-      { message: "Internal server error" },
-      { status: 500 }
-    );
+    return mapErrorToResponse(err);
   }
 }
 
@@ -74,7 +56,7 @@ export async function DELETE(
   try {
     const { id } = await params;
     const noteId = Number(id);
-    if (isNaN(noteId)) throw new BadRequestException("Invalid note id");
+    if (isNaN(noteId)) throw new InvalidBodyDataError();
     const user = await getUser();
     const deleteNote = await noteService.deleteUserNote(user.id, noteId);
     return NextResponse.json(
@@ -82,15 +64,6 @@ export async function DELETE(
       { status: 200 }
     );
   } catch (err) {
-    if (err instanceof HttpException) {
-      return NextResponse.json(
-        { message: err.message },
-        { status: err.status }
-      );
-    }
-    return NextResponse.json(
-      { message: "Internal server error" },
-      { status: 500 }
-    );
+    return mapErrorToResponse(err);
   }
 }

@@ -1,7 +1,7 @@
-import { HttpException } from "@/lib/exceptions/HttpException";
 import { noteService } from "@/domains/notes/services/note.service";
 import { NextResponse } from "next/server";
 import { getUser } from "../_helpers/getUser";
+import { mapErrorToResponse } from "@/lib/http/errorMapper";
 
 export async function GET() {
   try {
@@ -9,16 +9,7 @@ export async function GET() {
     const notes = await noteService.getUserNotes(user.id);
     return NextResponse.json({ notes });
   } catch (err) {
-    if (err instanceof HttpException) {
-      return NextResponse.json(
-        { message: err.message },
-        { status: err.status }
-      );
-    }
-    return NextResponse.json(
-      { message: "Internal server error" },
-      { status: 500 }
-    );
+    return mapErrorToResponse(err);
   }
 }
 
@@ -32,16 +23,6 @@ export async function POST() {
       { status: 201 }
     );
   } catch (err) {
-    console.log(err);
-    if (err instanceof HttpException) {
-      return NextResponse.json(
-        { message: err.message },
-        { status: err.status }
-      );
-    }
-    return NextResponse.json(
-      { message: "Internal server error" },
-      { status: 500 }
-    );
+    return mapErrorToResponse(err);
   }
 }
