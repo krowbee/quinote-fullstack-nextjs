@@ -38,7 +38,7 @@ export default function LoginForm() {
         noValidate
         onSubmit={handleSubmit(handleForm)}
       >
-        <h2 className="text-xl">Sign in</h2>
+        <h2 className="text-xl text-primary py-2">Sign in</h2>
         <div className="flex w-full justify-between">
           <label htmlFor="email" className="text-md">
             Email
@@ -50,7 +50,7 @@ export default function LoginForm() {
         <input
           id="email"
           type="email"
-          className="ring-1 text-md rounded-sm ring-accent focus:outline-2 focus:outline-accent px-4 py-2"
+          className="ring-1 text-md rounded-sm ring-primary focus:outline-2 focus:outline-primary px-4 py-2"
           placeholder="example@mail.com"
           {...register("email")}
         ></input>
@@ -65,13 +65,13 @@ export default function LoginForm() {
         <input
           id="password"
           type="password"
-          className="ring-1 text-md rounded-sm ring-accent focus:outline-2 focus:outline-accent px-4 py-2"
+          className="ring-1 text-md rounded-sm ring-primary focus:outline-2 focus:outline-primary px-4 py-2"
           placeholder="password"
           {...register("password")}
         ></input>
         <button
           type="submit"
-          className="btn btn-md w-full  text-white bg-accent transition duration-300 ease-in hover:scale-101 hover:bg-gradient-to-r hover:from-green-400 via-accent to-emerald-300"
+          className="btn btn-md w-full  text-white bg-primary transition duration-300 ease-in hover:scale-101 "
         >
           Sign in
         </button>

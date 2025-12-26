@@ -51,19 +51,21 @@ export default function MobileHeader() {
             : "pointers-event-none opacity-0 -translate-y-1"
         }`}
       >
-        <nav className="flex flex-col gap-2 items-center text-xl  p-2">
-          {!isAuth ? (
-            <>
-              <Link href="/auth/login">Sign in</Link>
-              <Link href="/auth/register">Sign up</Link>
-            </>
-          ) : (
-            <>
-              <Link href="/notes">Notes</Link>
-              <Link href="/auth/logout">Logout</Link>
-            </>
-          )}
-        </nav>
+        {isOpen && (
+          <nav className="flex flex-col gap-2 items-center text-xl  p-2">
+            {!isAuth ? (
+              <>
+                <Link href="/auth/login">Sign in</Link>
+                <Link href="/auth/register">Sign up</Link>
+              </>
+            ) : (
+              <>
+                <Link href="/notes">Notes</Link>
+                <Link href="/auth/logout">Logout</Link>
+              </>
+            )}
+          </nav>
+        )}
       </div>
     </div>
   );

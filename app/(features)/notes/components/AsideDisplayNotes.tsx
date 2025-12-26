@@ -2,6 +2,7 @@
 import { useNoteStore } from "@/app/_store/useNoteStore";
 import { PublicNote } from "@/domains/notes/types/note.types";
 import { deleteNote, updateNote } from "../api/note.client.api";
+import { useIsMobile } from "@/app/hooks/useIsMobile";
 
 export default function AsideDisplayNotes({
   title,
@@ -14,6 +15,7 @@ export default function AsideDisplayNotes({
 }) {
   const setChoosedNote = useNoteStore((state) => state.setChoosedNote);
   const choosedNote = useNoteStore((state) => state.choosedNote);
+  const isMobile = useIsMobile();
 
   const handleDeleteNote = async (noteId: number) => {
     const result = await deleteNote(noteId);
@@ -50,14 +52,18 @@ export default function AsideDisplayNotes({
           </h1>
           <div className="flex justify-between items-center gap-2 font-mono">
             <button
-              className="text-sm opacity-0 transition-all ease cursor-pointer group-hover:opacity-100 "
+              className={`text-sm transition-all ease cursor-pointer ${
+                !isMobile && "opacity-0 group-hover:opacity-100"
+              } `}
               onClick={() => handleDeleteNote(note.id)}
             >
               🗑
             </button>
 
             <button
-              className="text-2xl opacity-0 transition-all ease ease cursor-pointer group-hover:opacity-100"
+              className={`text-2xl transition-all ease ease cursor-pointer ${
+                !isMobile && "opacity-0 group-hover:opacity-100"
+              }`}
               onClick={() => handlePinNote(note.id, !note.pinned)}
             >
               {note.pinned ? "☆" : "★"}

@@ -7,7 +7,7 @@ export default async function NotesPage() {
   const initialNoteList: PublicNote[] = (await getInitialNotes()) || null;
   return (
     <main>
-      <div className="w-full min-h-screen flex pt-20">
+      <div className="w-full min-h-screen flex pt-17">
         <NoteAside initialNoteList={initialNoteList} />
         <NoteBlock />
       </div>

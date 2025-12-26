@@ -27,7 +27,7 @@ export default function LogoutForm() {
 
   return (
     <div className="flex flex-col card justify-center items-center p-8 shadow-sm">
-      <h1 className="text-xl">Logout</h1>
+      <h1 className="text-xl text-primary">Logout</h1>
       <form
         className="flex flex-col justify-center items-center login-form form gap-4 text-sans"
         noValidate

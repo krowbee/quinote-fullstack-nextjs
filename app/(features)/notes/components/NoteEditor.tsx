@@ -49,15 +49,15 @@ export default function NoteEditor({ note }: { note: PublicNote }) {
   }, [debouncedTitle, debouncedText, note.id, updateLocalNote]);
 
   return (
-    <div className="flex flex-col w-full h-full">
+    <div className="flex flex-col w-full h-full prose">
       <input
         value={title}
         onChange={(e) => setTitle(e.target.value)}
-        className="w-full outline-none text-4xl font-bold mb-4 text-center"
+        className="w-full outline-none text-4xl text-black font-bold mb-4 text-center"
       />
 
       <textarea
-        className="w-full h-full border-none outline-none"
+        className="w-full h-full border-none outline-none hide-scrollbar"
         value={text}
         onChange={(e) => setText(e.target.value)}
         spellCheck={false}
