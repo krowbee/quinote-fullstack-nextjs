@@ -5,7 +5,7 @@ import remarkBreaks from "remark-breaks";
 
 export default function NotePreview({ note }: { note: PublicNote }) {
   return (
-    <div className="prose max-w-none overflow-y-auto hide-scrollbar p-4">
+    <div className="prose max-w-none overflow-y-auto hide-scrollbar">
       <h2 className="w-full text-4xl font-bold text-center mb-4">
         {note.name}
       </h2>

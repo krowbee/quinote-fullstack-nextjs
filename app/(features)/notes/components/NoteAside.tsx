@@ -49,7 +49,7 @@ export default function NoteAside({
   }, [notes]);
 
   return (
-    <aside className="flex flex-col items-center gap-6  overflow-y-auto shadow-sm w-[300px] p-4">
+    <aside className="flex flex-col items-center gap-6  overflow-y-auto hide-scrollbar shadow-sm w-[300px] p-4">
       <div className="profile-block w-full flex flex-col items-center  justify-center p-4">
         <h2 className="text-md">You working as:</h2>
         <p className="text-md font-medium text-primary">{user?.email}</p>
@@ -57,11 +57,13 @@ export default function NoteAside({
       <NewNote refreshNotes={refreshNotes} />
       <div className="w-full flex flex-col gap-4 items-center">
         <>
-          <AsideDisplayNotes
-            title="Pinned"
-            refreshNotes={refreshNotes}
-            notes={pinnedNotes}
-          />
+          {pinnedNotes.length !== 0 ? (
+            <AsideDisplayNotes
+              title="Pinned"
+              refreshNotes={refreshNotes}
+              notes={pinnedNotes}
+            />
+          ) : null}
           <AsideDisplayNotes
             title="Notes"
             refreshNotes={refreshNotes}

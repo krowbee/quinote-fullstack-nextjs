@@ -30,7 +30,7 @@ export default function NoteBlock() {
 
   return (
     <div
-      className="note-detail-container overflow-y-auto w-full p-6 bg-base-300 hide-scrollbar"
+      className="note-detail-container overflow-y-auto w-full px-14 pt-14 bg-base-200 hide-scrollbar"
       onClick={() => setIsEditing(true)}
       ref={containerRef}
     >

@@ -49,7 +49,7 @@ export default function NoteEditor({ note }: { note: PublicNote }) {
   }, [debouncedTitle, debouncedText, note.id, updateLocalNote]);
 
   return (
-    <div className="flex flex-col w-full h-full  p-4">
+    <div className="flex flex-col w-full h-full">
       <input
         value={title}
         onChange={(e) => setTitle(e.target.value)}

@@ -18,7 +18,6 @@ export default function NewNote({
 
   return (
     <div className="justify-center items-center flex flex-col gap-4">
-      <h2 className="text-md font-bold">New note</h2>
       <p
         className="font-bold cursor-pointer"
         onClick={() => handleCreateNote()}

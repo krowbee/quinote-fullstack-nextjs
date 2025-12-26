@@ -33,8 +33,8 @@ export default function AsideDisplayNotes({
   };
 
   return (
-    <div className="notes-block flex flex-col justify-center items-center w-full gap-2 h-full min-h-20">
-      <h2 className="text-lg font-bold">{title}</h2>
+    <div className="notes-block flex flex-col justify-center items-center w-full gap-2 h-full">
+      <h2 className="text-md">{title}</h2>
       {notes.map((note) => (
         <div
           key={note.id}
